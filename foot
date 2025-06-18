@@ -1,0 +1,34 @@
+[main]
+pad=12x12
+font=Departure Mono Nerd Font:size=12
+font-bold=Departure Mono Nerd Font:size=12
+font-italic=Departure Mono Nerd Font:size=12
+font-bold-italic=Departure Mono Nerd Font:size=12
+
+include=/usr/share/foot/themes/dracula
+
+[colors]
+foreground=e0def4
+background=191724
+regular0=0E0E0E # black
+regular1=9C5767 # red
+regular2=897165 # green
+regular3=97636A # yellow
+regular4=998D74 # blue
+regular5=AB5F72 # magenta
+regular6=A67674 # cyan
+regular7=AFA99C # white
+
+bright0=7B776E # bright black
+bright1=9C5767 # bright red
+bright2=897165 # bright green
+bright3=97636A # bright yellow
+bright4=998D74 # bright blue
+bright5=AB5F72 # bright magenta
+bright6=A67674 # bright cyan
+bright7=AFA99C # bright white
+
+foreground=d4be98
+background=09090F
+
+alpha=0.8
