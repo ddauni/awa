@@ -1,0 +1,142 @@
+separator: &separator
+  foreground: "ffffffff"
+  content:
+    string: {text: "|"}
+
+bar:
+  height: 30
+  location: top
+  font: Departure Mono:pixelsize=16
+  spacing: 0
+  margin: 0
+  foreground: "ffffffff"
+  background: "000000ff"
+
+  left:
+    - label:
+        content: {string: {text: " 󰣨  "}}
+
+#    - label: *separator
+
+    - river:
+        anchors:
+          - base: &river_particle
+              left-margin: 15
+              right-margin: 15
+              default:
+                string: {text: "{id}"}
+              conditions:
+                occupied:
+                  string: {text: "{id}"}
+
+        content:
+          map:
+            on-click:
+              left: sh -c "riverctl set-focused-tags $((1 << ({id} - 1)))"
+              right: sh -c "riverctl toggle-focused-tags $((1 << ({id} -1)))"
+              middle: sh -c "riverctl toggle-view-tags $((1 << ({id} -1)))"
+            default:
+              map:
+                <<: *river_particle
+            conditions:
+              state == urgent:
+                map:
+                  <<: *river_particle
+                  deco: {background: {color: "3a3a3aff"}}
+
+              state == focused:
+                map:
+                  <<: *river_particle
+                  deco: {background: {color: "3a3a3aff"}}
+
+              state == invisible:
+                map:
+                  default:
+                    empty: {}
+                  conditions:
+                    id <= 4:
+                      map:
+                        <<: *river_particle
+
+    - label: *separator
+
+    - foreign-toplevel:
+        content:
+          map:
+            conditions:
+              ~activated: {empty: {}}
+              activated:
+               - string: {text: " {app-id} ●", foreground: ffa0a0ff}
+               - string: {text: " {title}"}
+
+#  center:
+
+  right:
+
+    - battery:
+        name: BAT0
+        poll-interval: 30000
+        anchors:
+          discharging: &discharging
+            list:
+              items:
+                - ramp:
+                    tag: capacity
+                    items:
+                      - string: {text: ,  foreground: ff0000ff, font: DepartureMono}
+                      - string: {text: ,  foreground: ffa600ff, font: DepartureMono}
+                      - string: {text: ,  font: DepartureMono}
+                      - string: {text: ,  font: DepartureMono}
+                      - string: {text: ,  font: DepartureMono}
+                      - string: {text: ,  font: DepartureMono}
+                      - string: {text: ,  font: DepartureMono}
+                      - string: {text: ,  font: DepartureMono}
+                      - string: {text: ,  font: DepartureMono}
+                      - string: {text: ,  foreground: 00ff00ff, font: DepartureMono}
+                - string: {text: " {capacity}% "}
+        content:
+          map:
+            conditions:
+              state == unknown:
+                <<: *discharging
+              state == discharging:
+                <<: *discharging
+              state == charging:
+                - string: {text:   , foreground: 00ff00ff, font: DepartureMono}
+                - string: {text: " {capacity}% "}
+              state == full:
+                - string: {text:  , foreground: 00ff00ff, font: DepartureMono}
+                - string: {text: " {capacity}% "}
+              state == "not charging":
+                - ramp:
+                    tag: capacity
+                    items:
+                      - string: {text:  ,  foreground: ff0000ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: ffa600ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                      - string: {text:  ,  foreground: 00ff00ff, font: DepartureMono}
+                - string: {text: " {capacity}% "}
+
+    - cpu:
+        poll-interval: 2500
+        content: {map: {conditions: {id < 0: {string: {text: "|  CPU {cpu}% "}}}}}
+
+    - label: *separator
+
+    - mem:
+        poll-interval: 2500
+        content: {string: {text: " 󰍛 RAM {percent_used}% "}}
+
+    - label: *separator
+
+    - clock:
+        time-format: "%H:%M"
+        date-format: "%d %B"
+        content:
+          string: {text: "  {date} {time} "}
