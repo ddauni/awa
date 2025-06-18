@@ -1,0 +1,17 @@
+dpi-aware=no
+icon-theme=Papirus-Dark
+font=Departure Mono NerdFont:size=16
+fields=name,generic,comment,categories,filename,keywords
+show-actions=yes
+exit-on-keyboard-focus-loss=no
+
+[colors]
+background=000000fa
+selection=D3D3D3fa
+border=fffffffa
+text=808080fa
+transparency = 0.3
+
+
+[border]
+radius=20
